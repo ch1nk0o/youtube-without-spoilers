@@ -55,20 +55,3 @@ Full privacy policy: [PRIVACY.md](PRIVACY.md)
 ## License
 
 [MIT](LICENSE) — © Chingiz Kocherov
-
----
-
-## Development
-
-For contributors only — regular users should install from the Chrome Web Store.
-
-```bash
-git clone https://github.com/ch1nk0o/youtube-without-spoilers.git
-cd youtube-without-spoilers
-```
-
-Then in Chrome:
-1. `chrome://extensions/` → enable **Developer mode** (top right)
-2. **Load unpacked** → select the cloned folder
-
-Build the Store-ready zip: `./build-store-zip.sh`

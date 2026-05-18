@@ -26,26 +26,20 @@ This extension is built around a per-channel whitelist: spoilers stay hidden onl
 
 ## Install
 
-### From Chrome Web Store
-_(pending review)_
-
-### Manual (developer mode)
-
-1. Download or clone this repo
-2. Generate the PNG icons:
-   - Open `icons/generate.html` in Chrome → click "Скачать все 3 PNG"
-   - Move the downloaded `icon16.png`, `icon48.png`, `icon128.png` into `icons/`
-3. Open `chrome://extensions/` → enable **Developer mode** (top right)
-4. **Load unpacked** → select this folder
-5. Pin the extension to the toolbar
+[Install from Chrome Web Store](#) _(link coming after review)_ — one click.
 
 ## How to use
 
+**Per-channel mode (default):**
 1. Visit the YouTube channel you want to hide spoilers for
 2. Click the extension icon → **+ Add**
 3. Done. Every video from that channel will be censored — in the player and in feeds.
 
 To unhide a channel: open the popup → click `×` next to its name.
+
+**Apply to all of YouTube:** open the popup → switch to the **Everywhere on YouTube** tab. No need to pick channels — spoilers are hidden on every video.
+
+Toggle individual elements (timeline, duration, chapters, hover preview, thumbnail badges) any time from the popup. Master on/off via `Alt+H`.
 
 ## Privacy
 
@@ -61,3 +55,20 @@ Full privacy policy: [PRIVACY.md](PRIVACY.md)
 ## License
 
 [MIT](LICENSE) — © Chingiz Kocherov
+
+---
+
+## Development
+
+For contributors only — regular users should install from the Chrome Web Store.
+
+```bash
+git clone https://github.com/ch1nk0o/youtube-without-spoilers.git
+cd youtube-without-spoilers
+```
+
+Then in Chrome:
+1. `chrome://extensions/` → enable **Developer mode** (top right)
+2. **Load unpacked** → select the cloned folder
+
+Build the Store-ready zip: `./build-store-zip.sh`

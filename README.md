@@ -10,7 +10,7 @@ Chrome extension that hides the YouTube progress bar, video duration, chapters, 
 
 You're watching a tournament VOD. You don't know who won. You glance at the progress bar — 5 minutes left, your team is down 2-3. Suspense gone.
 
-Most existing "spoiler hider" extensions are all-or-nothing or have been disabled by Chrome for not migrating to Manifest V3. This one is built around a per-channel whitelist from day one.
+This extension is built around a per-channel whitelist: spoilers stay hidden only on the channels you choose, everywhere else YouTube works normally.
 
 ## Features
 

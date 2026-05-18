@@ -161,7 +161,7 @@ section { margin-bottom: 14px; }
 
 /* ---------- Channel list ---------- */
 .channel-list {
-  max-height: 200px; /* ~6 items, дальше — скролл */
+  max-height: 140px; /* ~4 items, дальше — скролл */
   overflow-y: auto;
   display: flex;
   flex-direction: column;

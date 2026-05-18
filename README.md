@@ -1,5 +1,7 @@
 # YouTube without Spoilers
 
+**English** · [Русский](README.ru.md)
+
 Chrome extension that hides the YouTube progress bar, video duration, chapters, and thumbnail durations — **per channel**. Watch tournaments and sports VODs with full suspense intact.
 
 > Live in Chrome Web Store: _(link coming after review)_

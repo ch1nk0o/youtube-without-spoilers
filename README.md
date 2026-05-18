@@ -8,9 +8,11 @@ Chrome extension that hides the YouTube progress bar, video duration, chapters, 
 
 ## Why
 
-You're watching a tournament VOD. You don't know who won. You glance at the progress bar — 5 minutes left, your team is down 2-3. Suspense gone.
+You missed the final live — work, time zones, fell asleep. It's morning now. You open the recap, and the whole way there you've been careful: no news, no Telegram, dodging every possible mention.
 
-This extension is built around a per-channel whitelist: spoilers stay hidden only on the channels you choose, everywhere else YouTube works normally.
+You hit play. Two seconds in, your eye catches the progress bar: "4 minutes left, score 12-11." All the suspense you guarded for hours — gone in a single glance.
+
+YouTube leaks the ending a dozen ways — total duration, chapters like "Final Comeback", the thumbnail frame when you scrub the timeline, the most-replayed heatmap on the progress bar. This extension hides all of it — but only on the channels you choose. Everywhere else YouTube works as normal.
 
 ## Features
 

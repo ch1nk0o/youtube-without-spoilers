@@ -1,0 +1,69 @@
+/* ============================================================
+   PLAYER
+   ============================================================ */
+
+html.yt-ns-player-timeline .ytp-progress-bar-container,
+html.yt-ns-player-timeline .ytp-progress-bar {
+  opacity: 0 !important;
+}
+
+html.yt-ns-player-duration .ytp-time-display,
+html.yt-ns-player-duration .ytp-time-current,
+html.yt-ns-player-duration .ytp-time-separator,
+html.yt-ns-player-duration .ytp-time-duration {
+  visibility: hidden !important;
+}
+
+html.yt-ns-chapters .ytp-chapter-container,
+html.yt-ns-chapters .ytp-chapter-title-content,
+html.yt-ns-chapters .ytp-chapter-title-prefix,
+html.yt-ns-chapters .ytp-chapter-hover-container,
+html.yt-ns-chapters .ytp-chapters-container {
+  display: none !important;
+}
+
+html.yt-ns-hover-preview .ytp-tooltip,
+html.yt-ns-hover-preview .ytp-preview,
+html.yt-ns-hover-preview .ytp-tooltip-text-wrapper,
+html.yt-ns-hover-preview .ytp-tooltip-image,
+html.yt-ns-hover-preview .ytp-scrubber-container {
+  display: none !important;
+}
+
+/* ============================================================
+   CARDS — длительность и hover-autoplay
+   Покрываем и старую разметку (ytd-*), и новые web-component виджеты
+   (badge-shape-wiz, yt-thumbnail-view-model, lockup-view-model).
+   ============================================================ */
+
+/* Старый рендерер длительности (legacy) */
+.yt-ns-hide-card ytd-thumbnail-overlay-time-status-renderer,
+.yt-ns-hide-card .ytd-thumbnail-overlay-time-status-renderer,
+/* Промежуточный редизайн: badge-shape-wiz */
+.yt-ns-hide-card .badge-shape-wiz,
+.yt-ns-hide-card .badge-shape-wiz--thumbnail-badge,
+.yt-ns-hide-card .badge-shape-wiz__text,
+.yt-ns-hide-card .yt-thumbnail-view-model__overlay--bottom-right,
+.yt-ns-hide-card yt-thumbnail-overlay-badge-view-model,
+.yt-ns-hide-card .thumbnail-overlay-badge-shape,
+.yt-ns-hide-card [class*="ThumbnailOverlayBadge"],
+.yt-ns-hide-card [class*="thumbnail-overlay-badge"],
+/* Текущий редизайн (2024+): yt-thumbnail-bottom-overlay-view-model + badge-shape */
+.yt-ns-hide-card yt-thumbnail-bottom-overlay-view-model,
+.yt-ns-hide-card yt-thumbnail-badge-view-model,
+.yt-ns-hide-card badge-shape,
+.yt-ns-hide-card .ytThumbnailBottomOverlayViewModelHost,
+.yt-ns-hide-card .ytThumbnailBottomOverlayViewModelBadgeContainer,
+.yt-ns-hide-card .ytThumbnailBadgeViewModelHost,
+.yt-ns-hide-card .ytBadgeShapeHost,
+.yt-ns-hide-card .ytBadgeShapeText {
+  visibility: hidden !important;
+}
+
+/* Hover-autoplay (превью при наведении на карточку) */
+.yt-ns-hide-card ytd-video-preview,
+.yt-ns-hide-card #mouseover-overlay,
+.yt-ns-hide-card ytd-moving-thumbnail-renderer,
+.yt-ns-hide-card .ytd-video-preview {
+  display: none !important;
+}

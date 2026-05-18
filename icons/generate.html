@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>No Spoilers — генератор иконок</title>
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #0f0f0f; color: #eee; padding: 32px; max-width: 720px; margin: 0 auto;
+  }
+  h1 { font-size: 20px; margin: 0 0 8px; }
+  p { color: #aaa; line-height: 1.5; }
+  .row { display: flex; gap: 24px; align-items: flex-end; margin: 24px 0; flex-wrap: wrap; }
+  .icon-block { text-align: center; }
+  .icon-block canvas {
+    background: transparent;
+    border: 1px dashed #333;
+    image-rendering: pixelated;
+  }
+  .icon-block .label { font-size: 12px; color: #888; margin-top: 6px; }
+  button {
+    background: #ff0033; color: white; border: none;
+    padding: 12px 24px; border-radius: 6px;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  button:hover { filter: brightness(1.1); }
+  code { background: #1c1c1c; padding: 2px 6px; border-radius: 3px; font-size: 12px; }
+  ol { line-height: 1.7; }
+</style>
+</head>
+<body>
+  <h1>Генератор иконок No Spoilers</h1>
+  <p>Открой этот файл в Chrome <code>file://.../icons/generate.html</code>, нажми кнопку — браузер скачает три PNG. Положи их в эту же папку <code>icons/</code> с именами <code>icon16.png</code>, <code>icon48.png</code>, <code>icon128.png</code>.</p>
+
+  <div class="row" id="canvases"></div>
+
+  <button id="downloadAll">Скачать все 3 PNG</button>
+
+  <ol style="margin-top: 24px; color: #aaa;">
+    <li>Жми кнопку</li>
+    <li>Chrome скачает 3 файла в ~/Downloads</li>
+    <li>Перенеси их в папку <code>icons/</code> рядом с этим HTML</li>
+    <li>Reload расширения в <code>chrome://extensions/</code> → иконка появится в тулбаре</li>
+  </ol>
+
+<script>
+const SIZES = [16, 48, 128];
+const SVG = `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <rect width="128" height="128" rx="24" fill="#0f0f0f"/>
+  <circle cx="64" cy="64" r="50" fill="none" stroke="#ff0033" stroke-width="9"/>
+  <text x="64" y="60" text-anchor="middle" font-family="Arial Black, 'Helvetica Neue', sans-serif" font-size="28" font-weight="900" fill="#ffffff">YT</text>
+  <text x="64" y="84" text-anchor="middle" font-family="Arial Black, 'Helvetica Neue', sans-serif" font-size="13" font-weight="900" fill="#ffffff" letter-spacing="0.5">SPOILERS</text>
+  <line x1="29" y1="99" x2="99" y2="29" stroke="#ff0033" stroke-width="9" stroke-linecap="round"/>
+</svg>`;
+
+const canvases = {};
+const out = document.getElementById('canvases');
+
+SIZES.forEach(size => {
+  const block = document.createElement('div');
+  block.className = 'icon-block';
+
+  const c = document.createElement('canvas');
+  c.width = size;
+  c.height = size;
+  c.style.width = (size < 64 ? size * 4 : size) + 'px';
+  c.style.height = (size < 64 ? size * 4 : size) + 'px';
+
+  const label = document.createElement('div');
+  label.className = 'label';
+  label.textContent = size + '×' + size;
+
+  block.appendChild(c);
+  block.appendChild(label);
+  out.appendChild(block);
+  canvases[size] = c;
+});
+
+const svgBlob = new Blob([SVG], { type: 'image/svg+xml' });
+const svgUrl = URL.createObjectURL(svgBlob);
+const img = new Image();
+img.onload = () => {
+  SIZES.forEach(size => {
+    const ctx = canvases[size].getContext('2d');
+    ctx.clearRect(0, 0, size, size);
+    ctx.drawImage(img, 0, 0, size, size);
+  });
+};
+img.src = svgUrl;
+
+document.getElementById('downloadAll').addEventListener('click', () => {
+  SIZES.forEach(size => {
+    canvases[size].toBlob(blob => {
+      const a = document.createElement('a');
+      a.download = 'icon' + size + '.png';
+      a.href = URL.createObjectURL(blob);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    });
+  });
+});
+</script>
+</body>
+</html>

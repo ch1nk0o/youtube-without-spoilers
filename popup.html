@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>YouTube No Spoilers</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header>
+    <div class="row">
+      <h1>No Spoilers</h1>
+      <label class="switch">
+        <input type="checkbox" id="enabled" />
+        <span class="slider"></span>
+      </label>
+    </div>
+    <p class="hint" id="status-hint"></p>
+  </header>
+
+  <section class="mode-section">
+    <div class="mode-tabs" role="tablist">
+      <button class="mode-tab" data-mode="whitelist" role="tab">Только выбранные каналы</button>
+      <button class="mode-tab" data-mode="global" role="tab">Везде на YouTube</button>
+    </div>
+  </section>
+
+  <section id="whitelist-section">
+    <div class="section-title">
+      <span>Каналы со спойлер-режимом</span>
+      <span class="count" id="channel-count">0</span>
+    </div>
+
+    <div id="current-channel-box" class="current-channel" hidden>
+      <div class="current-channel-info">
+        <div class="current-channel-name" id="current-channel-name">—</div>
+        <div class="current-channel-meta" id="current-channel-meta">—</div>
+      </div>
+      <button id="add-current-channel" class="btn-primary">+ Добавить</button>
+    </div>
+
+    <div id="channel-list" class="channel-list"></div>
+
+    <div id="empty-state" class="empty-state" hidden>
+      <p>Список пуст.</p>
+      <p class="muted">Зайди на канал турниров/нарезок и нажми «Добавить» выше — расширение начнёт прятать спойлеры только там.</p>
+    </div>
+  </section>
+
+  <section class="toggles">
+    <div class="section-title">Что скрывать</div>
+    <label class="toggle"><input type="checkbox" data-hide="player_timeline" /><span>Таймлайн на видео</span></label>
+    <label class="toggle"><input type="checkbox" data-hide="player_duration" /><span>Длительность видео</span></label>
+    <label class="toggle"><input type="checkbox" data-hide="hover_preview" /><span>Превью при наведении</span></label>
+    <label class="toggle"><input type="checkbox" data-hide="chapters" /><span>Главы / chapters</span></label>
+    <label class="toggle"><input type="checkbox" data-hide="card_duration" /><span>Длительность на превью в фиде</span></label>
+    <label class="toggle"><input type="checkbox" data-hide="card_hover_autoplay" /><span>Автоплей превью при наведении</span></label>
+  </section>
+
+  <footer>
+    <a href="#" id="feedback-link" target="_blank" rel="noopener">Фидбэк и баги →</a>
+    <span class="version">v0.2.0</span>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

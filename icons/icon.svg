@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark rounded background -->
+  <rect width="128" height="128" rx="24" fill="#0f0f0f"/>
+
+  <!-- Red prohibition circle -->
+  <circle cx="64" cy="64" r="50" fill="none" stroke="#ff0033" stroke-width="9"/>
+
+  <!-- Text: "YT" big, "SPOILERS" small underneath -->
+  <text x="64" y="60" text-anchor="middle"
+        font-family="Arial Black, 'Helvetica Neue', sans-serif"
+        font-size="28" font-weight="900" fill="#ffffff">YT</text>
+  <text x="64" y="84" text-anchor="middle"
+        font-family="Arial Black, 'Helvetica Neue', sans-serif"
+        font-size="13" font-weight="900" fill="#ffffff" letter-spacing="0.5">SPOILERS</text>
+
+  <!-- Red diagonal slash on top (prohibition mark) -->
+  <line x1="29" y1="99" x2="99" y2="29"
+        stroke="#ff0033" stroke-width="9" stroke-linecap="round"/>
+</svg>

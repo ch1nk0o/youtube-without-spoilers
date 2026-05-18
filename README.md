@@ -58,4 +58,4 @@ Full privacy policy: [PRIVACY.md](PRIVACY.md)
 
 ## License
 
-TBD (will add MIT or similar soon).
+[MIT](LICENSE) — © Chingiz Kocherov

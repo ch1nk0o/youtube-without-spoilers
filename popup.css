@@ -161,11 +161,25 @@ section { margin-bottom: 14px; }
 
 /* ---------- Channel list ---------- */
 .channel-list {
-  max-height: 160px;
+  max-height: 200px; /* ~6 items, дальше — скролл */
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  padding-right: 2px;
+}
+.channel-list::-webkit-scrollbar {
+  width: 6px;
+}
+.channel-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.channel-list::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+  border-radius: 3px;
+}
+.channel-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 .channel-item {
   display: flex;

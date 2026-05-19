@@ -1,0 +1,16 @@
+{
+  "appName": {
+    "message": "YouTube without Spoilers",
+    "description": "Extension name shown in Chrome Web Store and chrome://extensions"
+  },
+  "appDescription": {
+    "message": "Hide YouTube timeline, duration, chapters and thumbnail times — per channel. Watch tournaments with full suspense.",
+    "description": "Short description in Chrome Web Store"
+  },
+  "actionTitle": {
+    "message": "YouTube without Spoilers"
+  },
+  "commandToggle": {
+    "message": "Toggle hiding spoilers on/off"
+  }
+}

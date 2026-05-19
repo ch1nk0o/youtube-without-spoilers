@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>YouTube No Spoilers</title>
+  <title>YouTube without Spoilers</title>
   <link rel="stylesheet" href="popup.css" />
 </head>
 <body>
@@ -19,14 +19,14 @@
 
   <section class="mode-section">
     <div class="mode-tabs" role="tablist">
-      <button class="mode-tab" data-mode="whitelist" role="tab">Только выбранные каналы</button>
-      <button class="mode-tab" data-mode="global" role="tab">Везде на YouTube</button>
+      <button class="mode-tab" data-mode="whitelist" data-i18n="modeWhitelist" role="tab">Selected channels only</button>
+      <button class="mode-tab" data-mode="global" data-i18n="modeGlobal" role="tab">Everywhere on YouTube</button>
     </div>
   </section>
 
   <section id="whitelist-section">
     <div class="section-title">
-      <span>Каналы со спойлер-режимом</span>
+      <span data-i18n="channelsTitle">Channels with spoiler mode</span>
       <span class="count" id="channel-count">0</span>
     </div>
 
@@ -35,30 +35,34 @@
         <div class="current-channel-name" id="current-channel-name">—</div>
         <div class="current-channel-meta" id="current-channel-meta">—</div>
       </div>
-      <button id="add-current-channel" class="btn-primary">+ Добавить</button>
+      <button id="add-current-channel" class="btn-primary" data-i18n="addBtn">+ Add</button>
     </div>
 
     <div id="channel-list" class="channel-list"></div>
 
     <div id="empty-state" class="empty-state" hidden>
-      <p>Список пуст.</p>
-      <p class="muted">Зайди на канал турниров/нарезок и нажми «Добавить» выше — расширение начнёт прятать спойлеры только там.</p>
+      <p data-i18n="emptyTitle">List is empty.</p>
+      <p class="muted" data-i18n="emptyHint">Visit a tournament/highlights channel and click "+ Add" above — the extension will hide spoilers only there.</p>
     </div>
   </section>
 
   <section class="toggles">
-    <div class="section-title">Что скрывать</div>
-    <label class="toggle"><input type="checkbox" data-hide="player_timeline" /><span>Таймлайн на видео</span></label>
-    <label class="toggle"><input type="checkbox" data-hide="player_duration" /><span>Длительность видео</span></label>
-    <label class="toggle"><input type="checkbox" data-hide="hover_preview" /><span>Превью при наведении</span></label>
-    <label class="toggle"><input type="checkbox" data-hide="chapters" /><span>Главы / chapters</span></label>
-    <label class="toggle"><input type="checkbox" data-hide="card_duration" /><span>Длительность на превью в фиде</span></label>
-    <label class="toggle"><input type="checkbox" data-hide="card_hover_autoplay" /><span>Автоплей превью при наведении</span></label>
+    <div class="section-title" data-i18n="togglesTitle">What to hide</div>
+    <label class="toggle"><input type="checkbox" data-hide="player_timeline" /><span data-i18n="togglePlayerTimeline">Timeline on video</span></label>
+    <label class="toggle"><input type="checkbox" data-hide="player_duration" /><span data-i18n="togglePlayerDuration">Video duration</span></label>
+    <label class="toggle"><input type="checkbox" data-hide="hover_preview" /><span data-i18n="toggleHoverPreview">Hover preview</span></label>
+    <label class="toggle"><input type="checkbox" data-hide="chapters" /><span data-i18n="toggleChapters">Chapters</span></label>
+    <label class="toggle"><input type="checkbox" data-hide="card_duration" /><span data-i18n="toggleCardDuration">Duration in feed thumbnails</span></label>
+    <label class="toggle"><input type="checkbox" data-hide="card_hover_autoplay" /><span data-i18n="toggleCardHoverAutoplay">Hover autoplay preview</span></label>
   </section>
 
   <footer>
-    <a href="#" id="feedback-link" target="_blank" rel="noopener">Фидбэк и баги →</a>
-    <span class="version">v0.2.1</span>
+    <a href="#" id="feedback-link" target="_blank" rel="noopener" data-i18n="feedbackLink">Feedback &amp; bugs →</a>
+    <div class="lang-switch">
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="ru">RU</button>
+    </div>
+    <span class="version">v0.3.0</span>
   </footer>
 
   <script src="popup.js"></script>

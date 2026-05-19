@@ -4,6 +4,7 @@ const STORAGE_KEY = 'state';
 const DEFAULT_STATE = {
   enabled: true,
   mode: 'whitelist',
+  locale: null, // null = follow browser; 'en' | 'ru' = explicit
   channels: [],
   hide: {
     player_timeline: true,
@@ -14,6 +15,92 @@ const DEFAULT_STATE = {
     card_hover_autoplay: true,
   },
 };
+
+// ---------- I18N ----------
+
+const I18N = {
+  en: {
+    modeWhitelist: 'Selected channels only',
+    modeGlobal: 'Everywhere on YouTube',
+    channelsTitle: 'Channels with spoiler mode',
+    addBtn: '+ Add',
+    addedBtn: '✓ Added',
+    emptyTitle: 'List is empty.',
+    emptyHint: 'Visit a tournament/highlights channel and click "+ Add" above — the extension will hide spoilers only there.',
+    togglesTitle: 'What to hide',
+    togglePlayerTimeline: 'Timeline on video',
+    togglePlayerDuration: 'Video duration',
+    toggleHoverPreview: 'Hover preview',
+    toggleChapters: 'Chapters',
+    toggleCardDuration: 'Duration in feed thumbnails',
+    toggleCardHoverAutoplay: 'Hover autoplay preview',
+    feedbackLink: 'Feedback & bugs →',
+    unnamed: 'Unnamed',
+    removeTitle: 'Remove',
+    statusOff: 'Off. Press Alt+H to turn on.',
+    statusGlobal: 'Hiding active everywhere on YouTube.',
+    statusEmpty: 'Add a channel — extension will only work there.',
+  },
+  ru: {
+    modeWhitelist: 'Только выбранные каналы',
+    modeGlobal: 'Везде на YouTube',
+    channelsTitle: 'Каналы со спойлер-режимом',
+    addBtn: '+ Добавить',
+    addedBtn: '✓ Добавлен',
+    emptyTitle: 'Список пуст.',
+    emptyHint: 'Зайди на канал турниров/нарезок и нажми «+ Добавить» выше — расширение начнёт прятать спойлеры только там.',
+    togglesTitle: 'Что скрывать',
+    togglePlayerTimeline: 'Таймлайн на видео',
+    togglePlayerDuration: 'Длительность видео',
+    toggleHoverPreview: 'Превью при наведении',
+    toggleChapters: 'Главы / chapters',
+    toggleCardDuration: 'Длительность на превью в фиде',
+    toggleCardHoverAutoplay: 'Автоплей превью при наведении',
+    feedbackLink: 'Фидбэк и баги →',
+    unnamed: 'Без названия',
+    removeTitle: 'Удалить',
+    statusOff: 'Выключено. Alt+H — быстрое включение.',
+    statusGlobal: 'Скрытие активно везде на YouTube.',
+    statusEmpty: 'Добавь канал — расширение начнёт работать только на нём.',
+  },
+};
+
+function detectBrowserLocale() {
+  try {
+    const lang = (chrome.i18n.getUILanguage() || 'en').toLowerCase();
+    return lang.startsWith('ru') ? 'ru' : 'en';
+  } catch (e) {
+    return 'en';
+  }
+}
+
+function currentLocale() {
+  return state.locale || detectBrowserLocale();
+}
+
+function T(key) {
+  const loc = currentLocale();
+  return (I18N[loc] && I18N[loc][key]) || I18N.en[key] || key;
+}
+
+function statusActiveText(n) {
+  const loc = currentLocale();
+  if (loc === 'ru') {
+    const form = pluralRu(n, ['канале', 'каналах', 'каналах']);
+    return `Активно на ${n} ${form}.`;
+  }
+  return n === 1 ? 'Active on 1 channel.' : `Active on ${n} channels.`;
+}
+
+function pluralRu(n, forms) {
+  const mod10 = n % 10;
+  const mod100 = n % 100;
+  if (mod10 === 1 && mod100 !== 11) return forms[0];
+  if ([2, 3, 4].includes(mod10) && ![12, 13, 14].includes(mod100)) return forms[1];
+  return forms[2];
+}
+
+// ---------- DOM ----------
 
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => document.querySelectorAll(sel);
@@ -63,7 +150,6 @@ async function detectActiveTabChannel() {
         if (location.pathname.startsWith('/@') || location.pathname.startsWith('/channel/')) {
           const handleMatch = location.pathname.match(/^\/@([^/]+)/);
           const channelMatch = location.pathname.match(/^\/channel\/([^/]+)/);
-          // Канал ID через canonical link или meta — стабильнее handle
           let id = channelMatch ? channelMatch[1] : null;
           if (!id) {
             const canonical = document.querySelector('link[rel="canonical"]');
@@ -103,7 +189,16 @@ function isInWhitelist(ch) {
 
 // ---------- RENDER ----------
 
+function applyI18nToDom() {
+  $$('[data-i18n]').forEach((el) => {
+    const key = el.dataset.i18n;
+    const txt = T(key);
+    if (txt) el.textContent = txt;
+  });
+}
+
 function render() {
+  applyI18nToDom();
   document.body.classList.toggle('disabled', !state.enabled);
   $('#enabled').checked = state.enabled;
   renderStatusHint();
@@ -111,30 +206,23 @@ function render() {
   renderCurrentChannel();
   renderChannelList();
   renderToggles();
+  renderLangSwitch();
   $('#feedback-link').href = FEEDBACK_URL;
 }
 
 function renderStatusHint() {
   const hint = $('#status-hint');
   if (!state.enabled) {
-    hint.textContent = 'Выключено. Alt+H — быстрое включение.';
+    hint.textContent = T('statusOff');
     return;
   }
   if (state.mode === 'global') {
-    hint.textContent = 'Скрытие активно везде на YouTube.';
+    hint.textContent = T('statusGlobal');
   } else if (state.channels.length === 0) {
-    hint.textContent = 'Добавь канал — расширение начнёт работать только на нём.';
+    hint.textContent = T('statusEmpty');
   } else {
-    hint.textContent = `Активно на ${state.channels.length} канал${plural(state.channels.length, ['е', 'ах', 'ах'])}.`;
+    hint.textContent = statusActiveText(state.channels.length);
   }
-}
-
-function plural(n, forms) {
-  const mod10 = n % 10;
-  const mod100 = n % 100;
-  if (mod10 === 1 && mod100 !== 11) return forms[0];
-  if ([2, 3, 4].includes(mod10) && ![12, 13, 14].includes(mod100)) return forms[1];
-  return forms[2];
 }
 
 function renderModeTabs() {
@@ -159,10 +247,10 @@ function renderCurrentChannel() {
 
   const btn = $('#add-current-channel');
   if (isInWhitelist(activeTabChannel)) {
-    btn.textContent = '✓ Добавлен';
+    btn.textContent = T('addedBtn');
     btn.disabled = true;
   } else {
-    btn.textContent = '+ Добавить';
+    btn.textContent = T('addBtn');
     btn.disabled = false;
   }
 }
@@ -185,13 +273,13 @@ function renderChannelList() {
 
     const name = document.createElement('div');
     name.className = 'channel-item-name';
-    name.textContent = ch.name || ch.handle || ch.id || 'Без названия';
+    name.textContent = ch.name || ch.handle || ch.id || T('unnamed');
     name.title = ch.handle || ch.id || '';
 
     const remove = document.createElement('button');
     remove.className = 'channel-item-remove';
     remove.textContent = '×';
-    remove.title = 'Удалить';
+    remove.title = T('removeTitle');
     remove.addEventListener('click', async () => {
       state.channels = state.channels.filter((c) => c !== ch);
       await saveState();
@@ -208,6 +296,13 @@ function renderToggles() {
   $$('.toggle input[data-hide]').forEach((input) => {
     const key = input.dataset.hide;
     input.checked = !!state.hide[key];
+  });
+}
+
+function renderLangSwitch() {
+  const active = currentLocale();
+  $$('.lang-btn').forEach((btn) => {
+    btn.classList.toggle('active', btn.dataset.lang === active);
   });
 }
 
@@ -233,7 +328,7 @@ $('#add-current-channel').addEventListener('click', async () => {
   state.channels.push({
     id: activeTabChannel.id || null,
     handle: activeTabChannel.handle || null,
-    name: activeTabChannel.name || activeTabChannel.handle || 'Канал',
+    name: activeTabChannel.name || activeTabChannel.handle || T('unnamed'),
   });
   await saveState();
   render();
@@ -243,6 +338,14 @@ $$('.toggle input[data-hide]').forEach((input) => {
   input.addEventListener('change', async () => {
     state.hide[input.dataset.hide] = input.checked;
     await saveState();
+  });
+});
+
+$$('.lang-btn').forEach((btn) => {
+  btn.addEventListener('click', async () => {
+    state.locale = btn.dataset.lang;
+    await saveState();
+    render();
   });
 });
 

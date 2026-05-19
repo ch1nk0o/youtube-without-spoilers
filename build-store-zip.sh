@@ -23,6 +23,8 @@ zip -r "$OUT" \
   icons/icon16.png \
   icons/icon48.png \
   icons/icon128.png \
+  _locales/en/messages.json \
+  _locales/ru/messages.json \
   -x "*.DS_Store"
 
 echo

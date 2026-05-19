@@ -1,0 +1,14 @@
+{
+  "appName": {
+    "message": "YouTube without Spoilers"
+  },
+  "appDescription": {
+    "message": "Скрывает таймлайн, длительность, главы и превью YouTube для выбранных каналов. Смотри турниры с интригой."
+  },
+  "actionTitle": {
+    "message": "YouTube without Spoilers"
+  },
+  "commandToggle": {
+    "message": "Включить/выключить скрытие спойлеров"
+  }
+}
